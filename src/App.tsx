@@ -9,9 +9,9 @@ import React, { useState } from "react";
 
 /**
   *
-  * At initial state, User should see an empty board.
-  User can make Cells "alive".
-  User can make Cells "dead".
+  * At initial state, User should see an empty board. DONE
+  User can make Cells "alive". DONE
+  User can make Cells "dead". DONE
   User can trigger "next generation".
   User can trigger a "reset" to the initial state.
   */
@@ -35,44 +35,51 @@ const createInitialGrid = (numRows: number, numCols: number) => {
 type TGrid = boolean[][];
 
 function App() {
-  const numCols = 15;
-  const numRows = 15;
+  const numCols = 5;
+  const numRows = 5;
   const cellLength = 30;
   const [grid, setGrid] = useState<TGrid>(() =>
     createInitialGrid(numRows, numCols)
   );
 
-  const toggleGridState = (x: number, y: number) => {
+  const toggleCellState = (x: number, y: number) => {
     const newGrid = [...grid];
     newGrid[x][y] = !newGrid[x][y];
 
     setGrid(newGrid);
   };
 
+  const resetGrid = () => {
+    setGrid(createInitialGrid(numRows, numCols));
+  };
+
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: `repeat(${numCols}, ${cellLength}px)`,
-      }}
-    >
-      {grid.map((rows, x) =>
-        rows.map((col, y: number) => (
-          <div
-            key={`${x}${y}`}
-            onClick={() => {
-              toggleGridState(x, y);
-            }}
-            style={{
-              width: cellLength,
-              height: cellLength,
-              backgroundColor: grid[x][y] ? "red" : "white",
-              border: "solid 1px black",
-            }}
-          />
-        ))
-      )}
-    </div>
+    <>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: `repeat(${numCols}, ${cellLength}px)`,
+        }}
+      >
+        {grid.map((rows, x) =>
+          rows.map((col, y: number) => (
+            <div
+              key={`${x}${y}`}
+              onClick={() => {
+                toggleCellState(x, y);
+              }}
+              style={{
+                width: cellLength,
+                height: cellLength,
+                backgroundColor: grid[x][y] ? "red" : "white",
+                border: "solid 1px black",
+              }}
+            />
+          ))
+        )}
+      </div>
+      <span onClick={resetGrid}>Reset Button</span>
+    </>
   );
 }
 
