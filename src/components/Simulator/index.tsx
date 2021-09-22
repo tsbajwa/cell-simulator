@@ -3,9 +3,11 @@ import produce from "immer";
 import { createGrid, getNextGridState } from "./helpers";
 import { TGrid } from "./types";
 
-const Simulator = () => {
-  const numCols = 50;
-  const numRows = 50;
+import "./index.css";
+
+const Simulator: React.FC = () => {
+  const numCols = 20;
+  const numRows = 20;
   const cellLength = 30;
 
   const [grid, setGrid] = useState<TGrid>(() => createGrid(numRows, numCols));
@@ -30,8 +32,8 @@ const Simulator = () => {
   return (
     <>
       <div
+        className="grid"
         style={{
-          display: "grid",
           gridTemplateColumns: `repeat(${numCols}, ${cellLength}px)`,
         }}
       >
@@ -42,6 +44,7 @@ const Simulator = () => {
               onClick={() => {
                 toggleCellState(x, y);
               }}
+              data-testid={`cell-${x}${y}`}
               style={{
                 width: cellLength,
                 height: cellLength,
