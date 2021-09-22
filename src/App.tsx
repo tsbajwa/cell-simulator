@@ -16,13 +16,8 @@ import produce from "immer";
   User can trigger a "reset" to the initial state. [DONE]
   */
 
-// Initial empty board
-// onClick - toggle cells in board (alive/dead status)
-// Reset button - reset to initial state i.e all cells dead
-// Simulate button - logic to work out
-
 // GRID IS 0 based
-//TODO: cleanup. Be careful of referencing same array vs creating new
+
 const createInitialGrid = (numRows: number, numCols: number) => {
   const grid = [];
   for (let i = 0; i < numRows; i++) {
@@ -43,8 +38,6 @@ function App() {
     createInitialGrid(numRows, numCols)
   );
 
-  const [generating, setGenerating] = useState(false);
-
   const toggleCellState = (x: number, y: number) => {
     setGrid((grid) => {
       return produce(grid, (newGrid) => {
@@ -58,12 +51,10 @@ function App() {
     setGrid(createInitialGrid(numRows, numCols));
   };
 
-  //TODO: A Cell who "comes to life" outside the board should wrap at the other side of the board.
   const getTotalAliveNeighbours = (grid: TGrid, x: number, y: number) => {
     let totalAliveNeighbours = 0;
 
-    // offset
-    const neighbourRelativePositions = [
+    const neighbourOffsetPositions = [
       [0, 1],
       [1, 1],
       [1, 0],
@@ -74,10 +65,43 @@ function App() {
       [-1, 1],
     ];
 
-    neighbourRelativePositions.forEach(([relativeX, relativeY]) => {
+    neighbourOffsetPositions.forEach(([relativeX, relativeY]) => {
+      // (0,0) based
       const neighbourX = x + relativeX;
       const neighbourY = y + relativeY;
-      const neighbourValue = grid[neighbourX]?.[neighbourY];
+      let neighbourValue = grid[neighbourX]?.[neighbourY];
+
+      // Cell falls outside of board. Check other side of boards value as a cell who "comes to life" outside the board should wrap
+      if (neighbourValue === undefined) {
+        const numRows = grid.length;
+        const numCols = grid[0].length;
+
+        let wrappedX = neighbourX;
+        let wrappedY = neighbourY;
+
+        // Cell outside bottom edge
+        if (neighbourX >= numRows) {
+          wrappedX = wrappedX - numRows;
+        }
+
+        // Cell outside top edge
+        if (neighbourX < 0) {
+          wrappedX = wrappedX + numRows;
+        }
+
+        // Cell outside right edge
+        if (neighbourY >= numCols) {
+          wrappedY = wrappedY - numCols;
+        }
+
+        // Cell outside left edge
+        if (neighbourY < 0) {
+          wrappedY = wrappedY + numCols;
+        }
+
+        neighbourValue = grid[wrappedX][wrappedY];
+      }
+
       // A true value signifies that neighbour is alive
       neighbourValue && totalAliveNeighbours++;
     });
@@ -140,7 +164,7 @@ function App() {
         )}
       </div>
       <span onClick={resetGrid}>Reset Button</span>
-      <span onClick={startGeneration}>Generate Button</span>
+      <span onClick={startGeneration}>Generate</span>
     </>
   );
 }
