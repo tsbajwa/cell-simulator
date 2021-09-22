@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import produce from "immer";
-import { createInitialGrid, getNextGridState } from "./helpers";
+import { createGrid, getNextGridState } from "./helpers";
 import { TGrid } from "./types";
 
 const Simulator = () => {
@@ -8,9 +8,7 @@ const Simulator = () => {
   const numRows = 50;
   const cellLength = 30;
 
-  const [grid, setGrid] = useState<TGrid>(() =>
-    createInitialGrid(numRows, numCols)
-  );
+  const [grid, setGrid] = useState<TGrid>(() => createGrid(numRows, numCols));
 
   const toggleCellState = (x: number, y: number) => {
     setGrid((grid) =>
@@ -22,7 +20,7 @@ const Simulator = () => {
   };
 
   const handleResetGrid = () => {
-    setGrid(createInitialGrid(numRows, numCols));
+    setGrid(createGrid(numRows, numCols));
   };
 
   const handleGridGeneration = () => {
@@ -54,7 +52,7 @@ const Simulator = () => {
           ))
         )}
       </div>
-      <button onClick={handleResetGrid}>Reset Button</button>
+      <button onClick={handleResetGrid}>Reset</button>
       <button onClick={handleGridGeneration}>Generate</button>
     </>
   );

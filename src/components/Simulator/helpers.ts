@@ -1,7 +1,7 @@
 import { TGrid } from "./types";
 import produce from "immer";
 
-export const createInitialGrid = (numRows: number, numCols: number) => {
+export const createGrid = (numRows: number, numCols: number) => {
   const grid = [];
   for (let i = 0; i < numRows; i++) {
     const row = Array.from(Array(numCols), () => false);
