@@ -15,24 +15,17 @@ export const getNextGridState = (grid: TGrid) =>
   produce(grid, (newGrid) => {
     for (let x = 0; x < newGrid.length; x++) {
       for (let y = 0; y < newGrid[x].length; y++) {
-        const currentCell = grid[x][y];
+        const cell = grid[x][y];
         const aliveNeighbours = getAliveNeighbours(grid, x, y);
 
-        if (currentCell) {
-          if (aliveNeighbours < 2) {
-            newGrid[x][y] = false;
-          }
-          if (aliveNeighbours === 2 || aliveNeighbours === 3) {
-            newGrid[x][y] = true;
-          }
-
-          if (aliveNeighbours > 3) {
-            newGrid[x][y] = false;
-          }
+        if (
+          (cell && aliveNeighbours === 2) ||
+          (cell && aliveNeighbours === 3) ||
+          (!cell && aliveNeighbours === 3)
+        ) {
+          newGrid[x][y] = true;
         } else {
-          if (aliveNeighbours === 3) {
-            newGrid[x][y] = true;
-          }
+          newGrid[x][y] = false;
         }
       }
     }
