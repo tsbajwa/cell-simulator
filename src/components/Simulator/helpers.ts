@@ -52,7 +52,7 @@ const getAliveNeighbours = (grid: TGrid, x: number, y: number) => {
     const neighbourY = y + relativeY;
     let neighbourValue = grid[neighbourX]?.[neighbourY];
 
-    // Cell falls outside of board. Check other side of boards value as a
+    // Cell falls outside of board, so check other side of boards value as a
     // cell who "comes to life" outside the board should wrap
     if (neighbourValue === undefined) {
       const numRows = grid.length;
