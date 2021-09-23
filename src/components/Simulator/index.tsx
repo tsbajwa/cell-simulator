@@ -3,8 +3,6 @@ import produce from "immer";
 import { createGrid, getNextGridState } from "./helpers";
 import { TGrid } from "./types";
 
-import "./index.css";
-
 const Simulator: React.FC = () => {
   const numCols = 20;
   const numRows = 20;
