@@ -32,6 +32,7 @@ const Simulator: React.FC = () => {
       <div
         className="grid"
         style={{
+          display: "grid",
           gridTemplateColumns: `repeat(${numCols}, ${cellLength}px)`,
         }}
       >
