@@ -29,6 +29,6 @@ To change Grid size go to 'src/components/Simulator/index.tsx and change the fol
 
 If more time was available the following improvements would be made
 
-1. Styling improvements as current project has minimal styling
+1. Styling improvements as current project has minimal styling and does not use any best practices in relation to styling
 2. More test coverage.
 3. Better git flow with usage of branching and more meaningful commit messages.
