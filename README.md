@@ -22,7 +22,7 @@ Click the generate button to run a generation. The reset button will set the boa
 To change Grid size go to 'src/components/Simulator/index.tsx and change the following variables
 
 1. numCols - Determines the number of columns
-2. numROws - Determines the number of rows
+2. numRows - Determines the number of rows
 3. cellLength - Determines size of each cell
 
 ## Improvements
